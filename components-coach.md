@@ -98,3 +98,51 @@ digest preview, and the design-notes drawer. The drawer is review chrome, not pr
   segmented track.
 - `.app-content > .view:not([hidden])` — the SPA view must fill the content column so the footer
   pins to the bottom, without out-specifying the DS `.view[hidden] { display:none }` rule.
+
+---
+
+## Part 2: CRM layer components
+
+Added for My Discovery and the improvement drills. Same rule as part 1: every value binds to a
+token in `tokens.css`, and nothing here overrides a base component.
+
+### CRM gating, `[data-crm-only]` / `[data-nocrm-only]`
+
+The root element carries `data-crm="on"` or `"off"`. Anything that only exists once a CRM is
+connected is marked `data-crm-only`; its unconnected counterpart is `data-nocrm-only`. One
+attribute drives the My Discovery nav item, the Prospect column on Conversations and the sales
+coaching panel on a meeting, so a screen cannot drift out of sync with the navigation.
+
+The artifact host supplies its own `<html>`, so the JS sets the default attribute on load rather
+than relying on it being in the page source.
+
+### `.drill` and `.drill-block`
+
+How to improve, on My Coach. A drill is a named technique (`.dr-name`), the metric it fixes
+(`.dr-what`), and a cue (`.dr-cue`) short enough to hold in your head mid sentence. The cue sits
+on a panel surface with an inset hairline so it reads as the quotable part. Icon tile uses
+`--accent-3` on `--accent-11`, matching `.sc-icon` geometry.
+
+### `.prompt` and `.grounded`
+
+A Discovery Coach prompt: what to say (`.pr-say`), what it is for (`.pr-learn`), the CRM record it
+came from (`.grounded`, blue-3 on blue-11, deliberately the team-data blue rather than the brand
+amber), and Used / Discard. `.prompt.is-used` fades to 55 percent and strikes the text, so a
+counselor working down the sheet can see where they are.
+
+### `.say-aloud` and `.ask-card`
+
+`.say-aloud` is the block the counselor reads out: gray-2, inset hairline, italic, wide measure.
+`.ask-card` is the one control on the sheet that writes back to the CRM, so it is the only block
+tinted `--accent-2` on an `--accent-6` ring, and it carries the single `.btn-solid`.
+
+### `.feed` and `.feed-item`
+
+The activity feed. Type is carried by icon plus label, never colour alone. Tours tint the icon
+tile amber, notes tint it blue, everything else stays gray-3.
+
+### `.stages` and `.stage`
+
+The CRM pipeline. Completed stages are green-3, the current stage is the solid amber pill with
+`--accent-contrast` text (the same treatment as the active nav item), and future stages are
+gray-3. Numbered because the pipeline genuinely is a sequence.

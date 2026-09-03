@@ -25,13 +25,26 @@ both supported.
 
 | Nav | What is on it |
 |---|---|
-| Conversations | The meeting list, plus four meeting sub-screens: the Coach tab, the states before a number exists, a single metric drilled into its ten moments, and the graded scorecard |
-| My Coach | Trends, one metric in depth, goals and streaks |
-| Team Coaching | Direct reports and coaching coverage, reviewing a call, the leaderboard and benchmarks, keyword tracking |
-| Scorecards | The rubric builder and the rules that apply a scorecard automatically |
+| Conversations | The meeting list, plus three meeting sub screens: the Coach tab, the states before a number exists, and one metric drilled into its ten moments |
+| My Coach | Trends, one metric in depth, goals and streaks, and the drills that say how to improve each pillar |
+| My Discovery | Prospects from the CRM, the Discovery Coach prompt sheet for the next tour, the logged activity behind it, and counselor notes |
 | Clip library | Promoting a moment into shared teaching material |
 | Settings | Who can see what, ideal ranges, modules and rollout |
 | Design review | This index, and the mobile and e-mail screens |
+
+## The two variants
+
+My Coach is identical for everyone. My Discovery only exists once a CRM is connected. The banner
+carries a switch between the two states, so you can see both without a rebuild.
+
+| | No CRM | CRM connected |
+|---|---|---|
+| My Coach | Trends, one metric, goals and streaks, plus improvement drills | Same, unchanged |
+| My Discovery | Not in the nav | Prospects, Discovery Coach, Activities, Notes |
+| Conversations | No Prospect column | Prospect column, auto matched on the calendar invite |
+| Meeting Coach tab | Communication coaching only | Plus what the conversation was for, coached against the prospect record |
+
+Scorecards and Team Coaching are parked for this round, not deleted.
 
 ## Requirements coverage
 

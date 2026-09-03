@@ -892,3 +892,116 @@ details.collapse .collapse-body { padding: var(--space-3); font-size: var(--fs-2
 /* rules.md S14: a title span and a sub span in the same cell render side by
    side unless the sub is a block. Fixes "Dana Whitfieldthe admin setting is off". */
 .table .cell-sub { display: block; margin-top: 2px; }
+
+/* ============================================================================
+   COACH EXTENSIONS, PART 2
+   CRM gating, the improvement drills on My Coach, and My Discovery.
+   Every value binds to a token. Specs in components-coach.md.
+   ============================================================================ */
+
+/* ---- CRM gating -----------------------------------------------------------
+   The shell carries data-crm on <html>. Anything that only exists once a CRM
+   is connected is marked [data-crm-only]; its counterpart for the unconnected
+   state is [data-nocrm-only]. One attribute, so a screen cannot drift out of
+   sync with the nav. */
+:root[data-crm="off"] [data-crm-only] { display: none !important; }
+:root[data-crm="on"] [data-nocrm-only] { display: none !important; }
+
+.app-banner .ab-crm { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--fs-1); }
+.app-banner .ab-link { border: 0; background: transparent; padding: 0; cursor: pointer;
+  font-family: var(--font-base); font-size: var(--fs-1); font-weight: var(--weight-medium);
+  color: var(--accent-11); text-decoration: underline; text-underline-offset: 2px; }
+.app-banner .ab-link:hover { color: var(--accent-12); }
+
+/* ---- Improvement drills (My Coach, "This week") ---------------------------
+   A pillar gets a titled block of two or three drills. Each drill is a named
+   technique, what it fixes, and a cue short enough to hold in your head during
+   a meeting. Bordered like every other card on the page. */
+.drill-block { display: grid; gap: var(--space-3); }
+.drill-pillar { display: flex; align-items: center; gap: var(--space-2); }
+.drill-pillar .dp-name { font-size: var(--fs-3); font-weight: var(--weight-bold); color: var(--fg-high); }
+.drill-pillar .dp-metric { font-size: var(--fs-1); color: var(--fg-low); }
+.drill { display: grid; grid-template-columns: 32px 1fr; gap: var(--space-3);
+  padding: var(--space-3); border-radius: var(--radius-3); background: var(--gray-2); }
+.drill .dr-ic { width: 32px; height: 32px; border-radius: var(--radius-3);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--accent-3); color: var(--accent-11); }
+.drill .dr-name { font-size: var(--fs-2); font-weight: var(--weight-medium); color: var(--fg-high); display: block; }
+.drill .dr-what { font-size: var(--fs-1); color: var(--fg-low); display: block; margin-top: 2px; }
+.drill .dr-cue { display: block; margin-top: var(--space-2); padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-2); background: var(--color-panel-solid);
+  box-shadow: inset 0 0 0 1px var(--border-subtle);
+  font-size: var(--fs-2); color: var(--table-fg); }
+.drill .dr-cue b { color: var(--fg-high); font-weight: var(--weight-medium); }
+
+/* ---- Discovery Coach ------------------------------------------------------
+   A prompt sheet, not a dashboard. Each section is a titled group of prompts;
+   each prompt states what it is for, cites the CRM record it came from, and
+   can be marked used or discarded. */
+.dc-section { padding-top: var(--space-4); border-top: 1px solid var(--border-subtle); }
+.dc-section:first-child { padding-top: 0; border-top: 0; }
+.dc-head { display: flex; align-items: baseline; gap: var(--space-2); margin-bottom: var(--space-1); }
+.dc-head .dc-title { font-size: var(--fs-3); font-weight: var(--weight-bold); color: var(--fg-high); }
+.dc-head .dc-why { font-size: var(--fs-1); color: var(--fg-low); }
+
+.prompt { padding: var(--space-3) 0; border-top: 1px dashed var(--border-subtle); }
+.prompt:first-of-type { border-top: 0; }
+.prompt .pr-say { font-size: var(--fs-2); color: var(--fg-high); line-height: var(--lh-2); }
+.prompt .pr-learn { display: block; margin-top: var(--space-1); font-size: var(--fs-1); color: var(--fg-low); }
+.prompt .pr-foot { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-2); }
+.prompt.is-used { opacity: .55; }
+.prompt.is-used .pr-say { text-decoration: line-through; text-decoration-color: var(--gray-8); }
+
+/* the CRM record a prompt is grounded in. Reads as a citation, not a filter. */
+.grounded { display: inline-flex; align-items: center; gap: var(--space-1);
+  height: 22px; padding: 0 var(--space-2); border-radius: var(--radius-2);
+  background: var(--blue-3); color: var(--blue-11);
+  font-size: var(--fs-1); font-weight: var(--weight-medium); }
+.grounded svg { width: 12px; height: 12px; }
+
+/* said-aloud block: the counselor reads this one out. Quiet, wide measure. */
+.say-aloud { padding: var(--space-4); border-radius: var(--radius-3);
+  background: var(--gray-2); box-shadow: inset 0 0 0 1px var(--border-subtle);
+  font-size: var(--fs-3); line-height: var(--lh-3); color: var(--fg-high); font-style: italic; max-width: 78ch; }
+
+/* the one suggested ask, the only place on the sheet that records anything */
+.ask-card { padding: var(--space-4); border-radius: var(--radius-3);
+  background: var(--accent-2); box-shadow: inset 0 0 0 1px var(--accent-6); }
+.ask-card .ak-title { font-size: var(--fs-2); font-weight: var(--weight-medium); color: var(--fg-high); }
+.ask-card .ak-why { display: block; margin-top: var(--space-2); font-size: var(--fs-1);
+  color: var(--fg-low); line-height: var(--lh-1); max-width: 92ch; }
+
+/* ---- Activity feed --------------------------------------------------------
+   One rail, one dot per event, type carried by icon plus label. */
+.feed { display: grid; gap: 0; }
+.feed-item { display: grid; grid-template-columns: 28px 1fr auto; gap: var(--space-3);
+  padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle); }
+.feed-item:last-child { border-bottom: 0; }
+.feed-item .fi-ic { width: 28px; height: 28px; border-radius: var(--radius-full);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--gray-3); color: var(--fg-low); }
+.feed-item .fi-ic svg { width: 14px; height: 14px; }
+.feed-item.is-tour .fi-ic { background: var(--accent-3); color: var(--accent-11); }
+.feed-item.is-note .fi-ic { background: var(--blue-3); color: var(--blue-11); }
+.feed-item .fi-what { font-size: var(--fs-2); color: var(--fg-high); }
+.feed-item .fi-sub { display: block; margin-top: 2px; font-size: var(--fs-1); color: var(--fg-low); }
+.feed-item .fi-when { font-size: var(--fs-1); color: var(--fg-subtle); white-space: nowrap; }
+
+/* ---- Prospect header ------------------------------------------------------ */
+.prospect-head { display: flex; align-items: flex-start; gap: var(--space-4); flex-wrap: wrap; }
+.prospect-head .ph-name { font-size: var(--fs-5); font-weight: var(--weight-bold); color: var(--fg-high); display: block; }
+.prospect-head .ph-meta { display: flex; align-items: center; gap: var(--space-3);
+  flex-wrap: wrap; margin-top: var(--space-1); font-size: var(--fs-1); color: var(--fg-low); }
+
+/* stage pipeline: where the prospect is, and how far is left */
+.stages { display: flex; align-items: center; gap: var(--space-1); flex-wrap: wrap; }
+.stage { display: inline-flex; align-items: center; gap: var(--space-1);
+  height: 24px; padding: 0 var(--space-2); border-radius: var(--radius-2);
+  font-size: var(--fs-1); font-weight: var(--weight-medium); color: var(--fg-subtle);
+  background: var(--gray-3); }
+.stage.is-done { background: var(--green-3); color: var(--green-11); }
+.stage.is-now { background: var(--accent-9); color: var(--accent-contrast); }
+.stage .st-n { display: inline-flex; align-items: center; justify-content: center;
+  width: 14px; height: 14px; border-radius: var(--radius-full);
+  background: color-mix(in srgb, currentColor 18%, transparent); font-size: 10px; }
+.stages .st-sep { width: 10px; height: 1px; background: var(--border-strong); flex: 0 0 auto; }
