@@ -737,7 +737,7 @@ details.collapse .collapse-body { padding: var(--space-3); font-size: var(--fs-2
 .metric-list { display: flex; flex-direction: column; gap: var(--space-2); }
 .metric { border-radius: var(--radius-4); background: var(--color-panel-solid); box-shadow: inset 0 0 0 1px var(--border-subtle); }
 .metric.is-flagged { box-shadow: inset 0 0 0 1px var(--red-7); }
-.metric > summary { list-style: none; cursor: pointer; padding: var(--space-3) var(--space-4); display: grid; grid-template-columns: minmax(0,1fr) 260px 200px; gap: var(--space-4); align-items: center; border-radius: var(--radius-4); }
+.metric > summary { list-style: none; cursor: pointer; padding: var(--space-3) var(--space-4); display: grid; grid-template-columns: minmax(0,1fr) 230px 268px; gap: var(--space-4); align-items: center; border-radius: var(--radius-4); }
 .metric > summary::-webkit-details-marker { display: none; }
 .metric > summary:hover { background: var(--gray-2); }
 .metric > summary:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
@@ -745,10 +745,12 @@ details.collapse .collapse-body { padding: var(--space-3); font-size: var(--fs-2
 .metric-name { display: flex; align-items: center; gap: var(--space-2); font-size: var(--fs-2); font-weight: var(--weight-medium); color: var(--fg-high); }
 .metric-def { display: block; font-size: var(--fs-1); color: var(--fg-subtle); margin-top: 2px; }
 .metric-read { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-3); }
-.metric-value { text-align: right; }
+.metric-read > .metric-value { min-width: 96px; }
+.metric-value { text-align: right; white-space: nowrap; }
 .metric-value b { font-size: var(--fs-5); font-weight: var(--weight-bold); color: var(--fg-high); font-variant-numeric: tabular-nums; }
 .metric-value .mv-unit { font-size: var(--fs-1); color: var(--fg-subtle); margin-left: 3px; }
-.metric-delta { display: block; font-size: var(--fs-1); margin-top: 2px; }
+.metric-delta { display: block; font-size: var(--fs-1); margin-top: 2px;
+  text-align: right; text-wrap: balance; }
 .metric-delta.is-up { color: var(--success-text); }
 .metric-delta.is-down { color: var(--danger-text); }
 .metric-chev { color: var(--fg-subtle); display: inline-flex; transition: transform .15s ease-in-out; }
