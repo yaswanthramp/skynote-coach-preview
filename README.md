@@ -6,7 +6,7 @@ skyNote Coach turns a recorded meeting into private, measured feedback on how yo
 and into a scorecard a sales team can coach against. This is the UX design for it: twelve screens
 in one interactive shell, covering FR-1 to FR-16 of the functional requirements.
 
-Designed by Yaswanthram Ponnada. Built in the Radix visual language, Radix Colors 12-step scales
+Designed by Yuki Park. Built in the Radix visual language, Radix Colors 12-step scales
 and Radix geometry, tinted with Skypoint amber and set in Inter.
 
 All figures, people and accounts are illustrative sample data.
@@ -25,6 +25,7 @@ both supported.
 
 | Nav | What is on it |
 |---|---|
+| Lisa | The digital twin: the daily brief and her proposals, follow-ups both ways, Ask Lisa, and her activity log. Plus the draft-and-send dialog |
 | Conversations | The meeting list, plus three meeting sub screens: the Coach tab, the states before a number exists, and one metric drilled into its ten moments |
 | My Coach | Trends, one metric in depth, goals and streaks, and the drills that say how to improve each pillar |
 | My Discovery | Prospects from the CRM, the Discovery Coach prompt sheet for the next tour, the logged activity behind it, and counselor notes |

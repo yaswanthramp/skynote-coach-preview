@@ -1007,3 +1007,110 @@ details.collapse .collapse-body { padding: var(--space-3); font-size: var(--fs-2
   width: 14px; height: 14px; border-radius: var(--radius-full);
   background: color-mix(in srgb, currentColor 18%, transparent); font-size: 10px; }
 .stages .st-sep { width: 10px; height: 1px; background: var(--border-strong); flex: 0 0 auto; }
+
+/* ============================================================================
+   COACH EXTENSIONS, PART 3
+   Lisa, the digital twin, and one-click draft and send.
+   Token bound throughout. Specs in components-coach.md.
+   ============================================================================ */
+
+/* ---- Lisa's voice ---------------------------------------------------------
+   The brief is prose, not a dashboard. Reading size, reading measure. */
+.lisa-say { font-size: var(--fs-3); line-height: var(--lh-3); color: var(--fg-high); max-width: 68ch; }
+.lisa-say b { font-weight: var(--weight-medium); }
+.lisa-mark { width: 40px; height: 40px; border-radius: var(--radius-full); flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--accent-9); color: var(--accent-contrast); }
+.lisa-mark.is-sm { width: 28px; height: 28px; }
+.lisa-mark svg { width: 20px; height: 20px; }
+.lisa-mark.is-sm svg { width: 15px; height: 15px; }
+
+/* ---- Proposal -------------------------------------------------------------
+   Lisa proposes, the user approves. Every card carries what she noticed, what
+   she wants to do, the record it came from, and an explicit action. A card
+   with no action is not a proposal, it is a notification. */
+.proposal { display: grid; grid-template-columns: 28px 1fr; gap: var(--space-3);
+  padding: var(--space-4); border-radius: var(--radius-4);
+  background: var(--color-panel-solid); box-shadow: inset 0 0 0 1px var(--border-subtle); }
+.proposal.is-late { box-shadow: inset 0 0 0 1px var(--red-7); }
+.proposal .pp-ic { width: 28px; height: 28px; border-radius: var(--radius-full);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--accent-3); color: var(--accent-11); }
+.proposal .pp-ic svg { width: 15px; height: 15px; }
+.proposal.is-late .pp-ic { background: var(--red-3); color: var(--red-11); }
+.proposal .pp-what { font-size: var(--fs-3); font-weight: var(--weight-medium); color: var(--fg-high); display: block; }
+.proposal .pp-why { display: block; margin-top: var(--space-1); font-size: var(--fs-2);
+  color: var(--table-fg); line-height: var(--lh-2); max-width: 78ch; }
+.proposal .pp-foot { display: flex; align-items: center; gap: var(--space-2);
+  flex-wrap: wrap; margin-top: var(--space-3); }
+
+/* the draft Lisa already wrote, folded down to a preview */
+.pp-preview { margin-top: var(--space-3); padding: var(--space-3);
+  border-radius: var(--radius-3); background: var(--gray-2);
+  box-shadow: inset 0 0 0 1px var(--border-subtle); }
+.pp-preview .ppv-head { display: flex; align-items: center; gap: var(--space-2);
+  font-size: var(--fs-1); color: var(--fg-low); margin-bottom: var(--space-2); }
+.pp-preview .ppv-subject { font-size: var(--fs-2); font-weight: var(--weight-medium); color: var(--fg-high); }
+.pp-preview .ppv-body { font-size: var(--fs-2); color: var(--fg-low); line-height: var(--lh-2);
+  margin-top: 4px; max-width: 78ch; }
+
+/* proposed time slots: pick one, nothing is booked until you do */
+.slots { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.slot { display: inline-flex; flex-direction: column; gap: 2px; padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-3); background: var(--color-surface); cursor: pointer;
+  box-shadow: inset 0 0 0 1px var(--border-ui); }
+.slot:hover { box-shadow: inset 0 0 0 1px var(--border-strong); }
+.slot.is-picked { background: var(--accent-3); box-shadow: inset 0 0 0 2px var(--accent-9); }
+.slot .sl-day { font-size: var(--fs-1); color: var(--fg-low); }
+.slot .sl-time { font-size: var(--fs-2); font-weight: var(--weight-medium); color: var(--fg-high); }
+
+/* ---- Today's schedule ----------------------------------------------------- */
+.sched { display: grid; gap: var(--space-2); }
+.sched-item { display: grid; grid-template-columns: 52px 1fr auto; gap: var(--space-3);
+  align-items: center; padding: var(--space-3); border-radius: var(--radius-3);
+  background: var(--color-panel-solid); box-shadow: inset 0 0 0 1px var(--border-subtle); }
+.sched-item.is-next { box-shadow: inset 0 0 0 1px var(--accent-8); background: var(--accent-2); }
+.sched-item .si-time { font-size: var(--fs-2); font-weight: var(--weight-medium);
+  color: var(--fg-high); font-variant-numeric: tabular-nums; }
+.sched-item .si-title { font-size: var(--fs-2); color: var(--fg-high); display: block; }
+.sched-item .si-sub { font-size: var(--fs-1); color: var(--fg-low); display: block; margin-top: 2px; }
+
+/* ---- Ask Lisa -------------------------------------------------------------
+   An answer with no citation is a guess, so every answer carries its meetings. */
+.chat { display: grid; gap: var(--space-4); }
+.chat-msg { display: grid; grid-template-columns: 28px 1fr; gap: var(--space-3); }
+.chat-msg.is-me { grid-template-columns: 1fr 28px; }
+.chat-msg.is-me .chat-body { justify-self: end; background: var(--accent-3); }
+.chat-msg.is-me .chat-av { order: 2; }
+.chat-body { padding: var(--space-3) var(--space-4); border-radius: var(--radius-4);
+  background: var(--gray-2); font-size: var(--fs-2); line-height: var(--lh-2);
+  color: var(--fg-high); max-width: 74ch; }
+.chat-body p + p { margin-top: var(--space-2); }
+.chat-cites { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-3); }
+.chat-ask { display: flex; gap: var(--space-2); align-items: center;
+  padding: var(--space-2); border-radius: var(--radius-4);
+  background: var(--color-surface); box-shadow: inset 0 0 0 1px var(--border-ui); }
+.chat-ask .input { box-shadow: none; background: transparent; }
+.chat-suggest { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+
+/* ---- Draft and send ------------------------------------------------------- */
+.draft-row { display: grid; grid-template-columns: 92px 1fr; gap: var(--space-3);
+  align-items: start; padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle); }
+.draft-row:last-of-type { border-bottom: 0; }
+.draft-row .dr-label { font-size: var(--fs-2); color: var(--fg-low); padding-top: 6px; }
+.draft-body { font-size: var(--fs-2); line-height: var(--lh-3); color: var(--fg-high);
+  white-space: pre-wrap; padding: var(--space-3); border-radius: var(--radius-3);
+  background: var(--color-surface); box-shadow: inset 0 0 0 1px var(--border-ui); min-height: 180px; }
+.recipients { display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center; }
+
+/* a stand-in backdrop, so the dialog can be reviewed inside the shell */
+.modal-stage { padding: var(--space-6); border-radius: var(--radius-4); background: var(--gray-3);
+  display: flex; justify-content: center; }
+.modal-stage > .dialog { position: static; width: min(720px, 100%); }
+
+/* ---- Learned preferences -------------------------------------------------- */
+.pref-row { display: grid; grid-template-columns: 1fr auto; gap: var(--space-4);
+  align-items: center; padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle); }
+.pref-row:last-child { border-bottom: 0; }
+.pref-row .pf-what { font-size: var(--fs-2); color: var(--fg-high); display: block; }
+.pref-row .pf-how { font-size: var(--fs-1); color: var(--fg-low); display: block; margin-top: 2px; }

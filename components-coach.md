@@ -146,3 +146,52 @@ tile amber, notes tint it blue, everything else stays gray-3.
 The CRM pipeline. Completed stages are green-3, the current stage is the solid amber pill with
 `--accent-contrast` text (the same treatment as the active nav item), and future stages are
 gray-3. Numbered because the pipeline genuinely is a sequence.
+
+---
+
+## Part 3: Lisa and one-click draft and send
+
+### `.proposal`
+
+Lisa's unit of work. Three parts, none optional: what she noticed (`.pp-what`), why she raised it
+(`.pp-why`), and an explicit action in `.pp-foot`. A card with no action would be a notification,
+and notifications are what people learn to scroll past. `.is-late` swaps the inset ring and the
+icon tile to the red scale; it is the only red on the screen, so one card of four reads as urgent.
+
+### `.pp-preview`
+
+The draft Lisa already wrote, folded into a preview on gray-2 with an inset hairline. This is the
+component that carries the feature: the difference between an assistant and a reminder is that the
+reply is already written.
+
+### `.slot` / `.slots`
+
+Proposed times. `.is-picked` is a 2px `--accent-9` inset ring, not a fill, so a picked slot still
+reads as a choice rather than a booking. Nothing reaches the calendar until Confirm.
+
+### `.chat` / `.chat-msg` / `.chat-body`
+
+Ask Lisa. The user's turn is `--accent-3`, Lisa's is `--gray-2`, both capped at 74ch. Every answer
+carries `.chat-cites`, reusing the `.grounded` chip from Discovery Coach so the citation habit reads
+as one product rather than two features sharing a shell.
+
+### `.sched-item`
+
+Today's meetings. `.is-next` lifts the next one onto `--accent-2` with an accent ring. Readiness is
+a `.badge`, so state is colour plus a word.
+
+### `.draft-row` / `.draft-body` / `.modal-stage`
+
+The send dialog, built on the DS `.dialog`. `.modal-stage` is a review-only stand-in for the modal
+backdrop so the dialog can be inspected inside the shell without a fixed overlay trapping the
+reviewer. In the product it opens over the meeting page.
+
+### `.pref-row`
+
+A learned preference: what Lisa inferred, the evidence she inferred it from, and Edit / Forget. An
+assistant that learns silently is one people switch off.
+
+### `.lisa-mark` / `.lisa-say`
+
+Lisa's avatar and her voice. `.lisa-say` is set at `--fs-3` on a 68ch measure because the brief is
+prose, not a dashboard, and it should read like a person wrote it.
