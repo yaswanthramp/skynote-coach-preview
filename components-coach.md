@@ -169,7 +169,9 @@ reply is already written.
 Proposed times. `.is-picked` is a 2px `--accent-9` inset ring, not a fill, so a picked slot still
 reads as a choice rather than a booking. Nothing reaches the calendar until Confirm.
 
-### `.chat` / `.chat-msg` / `.chat-body`
+### `.chat` / `.chat-msg` / `.chat-body` (parked)
+
+Ask Lisa, cut from the UX for now. `.chat-ask` is still in use: it is the instruction box in the send dialog. The rest of the set stays for whenever L-11 comes back.
 
 Ask Lisa. The user's turn is `--accent-3`, Lisa's is `--gray-2`, both capped at 74ch. Every answer
 carries `.chat-cites`, reusing the `.grounded` chip from Discovery Coach so the citation habit reads
