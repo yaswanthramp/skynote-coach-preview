@@ -25,7 +25,7 @@ both supported.
 
 | Nav | What is on it |
 |---|---|
-| Practice | Role play: choose a stage, the live session with the five-level meter, and the result out of 5. Guidelines live in Settings |
+| Role play | Choose a stage, run a branching session with the five-level meter, read the result out of 5. Fully interactive. Guidelines live in Settings |
 | Lisa | The digital twin: the daily brief and her proposals, follow-ups both ways, Ask Lisa, and her activity log. Plus the draft-and-send dialog |
 | Conversations | The meeting list, plus three meeting sub screens: the Coach tab, the states before a number exists, and one metric drilled into its ten moments |
 | My Coach | Trends, one metric in depth, goals and streaks, and the drills that say how to improve each pillar |

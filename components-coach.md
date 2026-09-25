@@ -244,3 +244,17 @@ moment it was judged on.
 
 Extends the DS `.radio-card` with the stage number, what you practise, the objections to expect and
 your last rating, so a stage can be chosen without opening anything.
+
+### Interactivity
+
+The role play screens are driven by a small state machine in the page rather than being static
+markup. Each step offers three things the counselor could say: one that works, one that is merely
+safe, one that costs them. The prospect's reply, the meter and the objectives all follow from the
+choice, which is the only honest way a static build can demonstrate "she answers what you said".
+
+Scoring: good +2, ok 0, poor -2, level = `clamp(3 + round(score / 2), 1, 5)`. The final rating is
+`1 + round(metObjectives / totalObjectives * 4)`, so the number is always traceable to the criteria.
+Every missed objective shows the line that would have earned it, taken from the same script.
+
+The result screen seeds a representative run on load, so it reads sensibly when opened cold from
+the screen index and is then overwritten by whatever the reviewer actually plays.
