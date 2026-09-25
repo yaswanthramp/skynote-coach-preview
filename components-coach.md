@@ -197,3 +197,50 @@ assistant that learns silently is one people switch off.
 
 Lisa's avatar and her voice. `.lisa-say` is set at `--fs-3` on a 68ch measure because the brief is
 prose, not a dashboard, and it should read like a person wrote it.
+
+---
+
+## Part 4: Role play
+
+### `.level` — the live level meter
+
+Five levels, Bad to Excellent. The level reads three ways at once so it never depends on colour:
+the **label** is always shown, the **colour** carries valence (red, orange, then green), and the
+**number of filled segments** carries degree. Amber is brand in this system, so the positive end is
+green rather than the brand hue, which also stops a good session looking like a promotion.
+
+`.is-lg` for the in-session rail and mobile, `.is-sm` for inline use. `.level-why` is the one-line
+explanation of why the meter last moved: a meter that changes silently teaches nothing.
+
+### `.level-track`
+
+How the meter moved across the whole session, as a bar per sample. Shown beside the final rating so
+a 3 out of 5 can be reconciled against a session that mostly read Good. This is the visible proof
+that the live score and the final score come from one rubric.
+
+### `.objectives` / `.objective`
+
+The stage's judging criteria, ticking as they are met. `.is-met` is green, `.is-part` orange,
+default is gray. It is both the live explanation of the meter and the reason the final rating cannot
+arrive as a surprise.
+
+### `.turn`
+
+A conversation turn. The counselor's turn is `--accent-3`, the AI prospect's is `--gray-2`.
+`.tn-flag` carries the per-turn judgement in green or red, which is what connects a specific
+sentence to the meter moving.
+
+### `.mic`
+
+Live microphone state on the red scale, with a pulse that respects `prefers-reduced-motion`. Red
+here is recording, not error.
+
+### `.rating` / `.rating-dots` / `.crit-result`
+
+The result: a number out of 5, five dots, and every criterion marked met, partly or missed with the
+moment it was judged on.
+
+### `.stage-card`
+
+Extends the DS `.radio-card` with the stage number, what you practise, the objections to expect and
+your last rating, so a stage can be chosen without opening anything.

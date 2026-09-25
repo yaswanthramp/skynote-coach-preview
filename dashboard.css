@@ -1114,3 +1114,108 @@ details.collapse .collapse-body { padding: var(--space-3); font-size: var(--fs-2
 .pref-row:last-child { border-bottom: 0; }
 .pref-row .pf-what { font-size: var(--fs-2); color: var(--fg-high); display: block; }
 .pref-row .pf-how { font-size: var(--fs-1); color: var(--fg-low); display: block; margin-top: 2px; }
+
+/* ============================================================================
+   COACH EXTENSIONS, PART 4
+   Role play: the live level meter, the objectives checklist, the session
+   transcript and the results rating. Token bound. Specs in components-coach.md.
+   ============================================================================ */
+
+/* ---- The live level meter -------------------------------------------------
+   Five levels, Bad to Excellent. Colour carries valence, the number of filled
+   segments carries degree, and the label is always present, so the level reads
+   three ways and never depends on colour alone. Amber stays brand, so the
+   positive end is green rather than the brand hue. */
+.level { display: grid; gap: var(--space-2); }
+.level-bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
+.level-seg { height: 10px; border-radius: var(--radius-1); background: var(--gray-4); }
+.level-head { display: flex; align-items: baseline; gap: var(--space-2); }
+.level-name { font-size: var(--fs-5); font-weight: var(--weight-bold); letter-spacing: var(--ls-5); }
+.level-why { font-size: var(--fs-1); color: var(--fg-low); }
+
+.level.is-bad      .level-seg.on { background: var(--red-9); }
+.level.is-bad      .level-name   { color: var(--red-11); }
+.level.is-notbad   .level-seg.on { background: var(--orange-9); }
+.level.is-notbad   .level-name   { color: var(--orange-11); }
+.level.is-good     .level-seg.on { background: var(--green-9); }
+.level.is-good     .level-name   { color: var(--green-11); }
+.level.is-better   .level-seg.on { background: var(--green-9); }
+.level.is-better   .level-name   { color: var(--green-11); }
+.level.is-excellent .level-seg.on { background: var(--green-9); }
+.level.is-excellent .level-name  { color: var(--green-11); }
+
+.level.is-lg .level-seg { height: 16px; border-radius: var(--radius-2); }
+.level.is-lg .level-name { font-size: var(--fs-7); letter-spacing: var(--ls-7); }
+.level.is-sm .level-seg { height: 6px; }
+.level.is-sm .level-name { font-size: var(--fs-3); }
+
+/* how the meter moved across the session, so the rating can be reconciled
+   against what the counselor actually saw while speaking */
+.level-track { display: flex; gap: 2px; align-items: flex-end; height: 44px; }
+.level-track i { flex: 1; border-radius: var(--radius-1) var(--radius-1) 0 0; background: var(--gray-5); }
+.level-track i.l1 { height: 20%; background: var(--red-9); }
+.level-track i.l2 { height: 40%; background: var(--orange-9); }
+.level-track i.l3 { height: 60%; background: var(--green-8); }
+.level-track i.l4 { height: 80%; background: var(--green-9); }
+.level-track i.l5 { height: 100%; background: var(--green-10); }
+
+/* ---- Objectives, ticking as they are met ---------------------------------- */
+.objectives { display: grid; gap: var(--space-2); }
+.objective { display: grid; grid-template-columns: 20px 1fr; gap: var(--space-2);
+  align-items: start; font-size: var(--fs-2); color: var(--fg-low); }
+.objective .ob-mark { width: 20px; height: 20px; border-radius: var(--radius-full);
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--gray-3); color: var(--fg-subtle); }
+.objective.is-met { color: var(--fg-high); }
+.objective.is-met .ob-mark { background: var(--green-3); color: var(--green-11); }
+.objective.is-part .ob-mark { background: var(--orange-3); color: var(--orange-11); }
+
+/* ---- Session transcript ---------------------------------------------------- */
+.turns { display: grid; gap: var(--space-3); }
+.turn { display: grid; grid-template-columns: 28px 1fr; gap: var(--space-3); }
+.turn .tn-body { padding: var(--space-3) var(--space-4); border-radius: var(--radius-4);
+  background: var(--gray-2); font-size: var(--fs-2); line-height: var(--lh-2); color: var(--fg-high); max-width: 72ch; }
+.turn.is-me .tn-body { background: var(--accent-3); }
+.turn .tn-who { font-size: var(--fs-1); color: var(--fg-low); margin-bottom: 3px; display: block; }
+.turn .tn-flag { display: inline-flex; align-items: center; gap: 4px; margin-top: var(--space-2);
+  font-size: var(--fs-1); }
+.turn .tn-flag.is-up { color: var(--success-text); }
+.turn .tn-flag.is-down { color: var(--danger-text); }
+
+/* live mic state, so the counselor knows it is listening */
+.mic { display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-2) var(--space-3); border-radius: var(--radius-full);
+  background: var(--red-3); color: var(--red-11); font-size: var(--fs-1); font-weight: var(--weight-medium); }
+.mic .mic-dot { width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--red-9); }
+@media (prefers-reduced-motion: no-preference) {
+  .mic .mic-dot { animation: micpulse 1.6s ease-in-out infinite; }
+  @keyframes micpulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+}
+
+/* ---- Results --------------------------------------------------------------- */
+.rating { display: flex; align-items: baseline; gap: var(--space-2); }
+.rating .rt-score { font-size: var(--fs-9); font-weight: var(--weight-bold);
+  letter-spacing: var(--ls-9); line-height: 1; color: var(--fg-high); }
+.rating .rt-of { font-size: var(--fs-4); color: var(--fg-low); }
+.rating-dots { display: flex; gap: 5px; }
+.rating-dots i { width: 13px; height: 13px; border-radius: var(--radius-full); background: var(--gray-5); }
+.rating-dots i.on { background: var(--green-9); }
+
+.crit-result { display: grid; grid-template-columns: 22px 1fr auto; gap: var(--space-3);
+  align-items: start; padding: var(--space-3) 0; border-bottom: 1px solid var(--border-subtle); }
+.crit-result:last-child { border-bottom: 0; }
+.crit-result .cr-mark { width: 22px; height: 22px; border-radius: var(--radius-full);
+  display: inline-flex; align-items: center; justify-content: center; }
+.crit-result.is-met .cr-mark { background: var(--green-3); color: var(--green-11); }
+.crit-result.is-part .cr-mark { background: var(--orange-3); color: var(--orange-11); }
+.crit-result.is-miss .cr-mark { background: var(--red-3); color: var(--red-11); }
+.crit-result .cr-name { font-size: var(--fs-2); color: var(--fg-high); display: block; }
+.crit-result .cr-note { font-size: var(--fs-1); color: var(--fg-low); display: block; margin-top: 2px; max-width: 82ch; }
+
+/* ---- Stage picker ---------------------------------------------------------- */
+.stage-card .sg-top { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.stage-card .sg-n { font-size: var(--fs-1); color: var(--fg-subtle); font-family: var(--font-mono); }
+.stage-card .sg-what { display: block; margin-top: var(--space-2); font-size: var(--fs-1);
+  color: var(--fg-low); line-height: var(--lh-1); }
+.stage-card .sg-last { display: flex; align-items: center; gap: var(--space-2);
+  margin-top: var(--space-3); font-size: var(--fs-1); color: var(--fg-low); }
