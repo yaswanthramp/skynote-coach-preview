@@ -1246,3 +1246,17 @@ button.list-item:focus-visible { outline: 2px solid var(--focus-ring); outline-o
 .list-item .li-sub { font-size: var(--fs-1); color: var(--fg-low); }
 .list-item:hover .li-sub { color: var(--accent-contrast); opacity: .8; }
 .list-item.is-selected .li-sub { color: var(--accent-11); opacity: .8; }
+
+/* ---- Read-only dropdown ---------------------------------------------------
+   Keeps the field shape of a dropdown for a value that is derived rather than
+   chosen. Styled as disabled on purpose: sunken fill, low-contrast text, no
+   hover and no pointer. A control that looks live but does nothing reads as
+   broken, so the affordance is deliberately withdrawn while the shape stays. */
+.dropdown.is-readonly {
+  background: var(--gray-2);
+  box-shadow: inset 0 0 0 1px var(--border-subtle);
+  color: var(--fg-low);
+  cursor: default;
+}
+.dropdown.is-readonly:hover { background: var(--gray-2); }
+.dropdown.is-readonly .dropdown-chevron { color: var(--fg-disabled); }

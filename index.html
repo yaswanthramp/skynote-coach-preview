@@ -7702,10 +7702,13 @@ meeting page, so the next person to open it can see a follow-up already went out
   <span class="dr-label">Practise as</span>
   <div>
     <div class="row-gap" style="gap:var(--space-2);flex-wrap:wrap;align-items:center;">
-      <span class="row-gap" style="gap:var(--space-2);" id="rpPersonaShow">
-        <span id="rpSetupAvatar"><span class="avatar c8" style="width:20px;height:20px;font-size:9px;">PD</span></span>
-        <span style="font-size:var(--fs-2);font-weight:var(--weight-medium);" class="text-high"
-              id="rpSetupPersona">Phyllis Dalrymple</span>
+      <span class="dropdown is-readonly" id="rpPersonaShow" aria-disabled="true"
+            title="Set by the stage you choose above">
+        <span class="row-gap" style="gap:var(--space-2);">
+          <span id="rpSetupAvatar"><span class="avatar c8" style="width:20px;height:20px;font-size:9px;">PD</span></span>
+          <span id="rpSetupPersona">Phyllis Dalrymple</span>
+        </span>
+        <span class="dropdown-chevron"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></span>
       </span>
       <span class="text-subtle" style="font-size:var(--fs-1);">or</span>
       <span id="rpGenericWrap"><button class="btn btn-surface is-sm" data-rp-generic><svg class="btn-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /> <circle cx="12" cy="7" r="4" /></svg> Use a generic persona</button></span>
