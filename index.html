@@ -9503,10 +9503,9 @@ and it is moving away from you.</p>
     var html = '<div class="list-item is-header">From your CRM, by stage</div>';
     Object.keys(RP_STAGES).forEach(function (k) {
       html += '<button class="list-item' + (k === rpSel ? ' is-selected' : '') + '" data-rp-person="' + k + '">' +
-        '<span class="avatar ' + rpTone(RP[k].persona) + '" style="width:20px;height:20px;font-size:10px;">' +
-        RP[k].ini + '</span><span style="display:flex;flex-direction:column;margin-left:8px;">' +
-        '<span>' + RP[k].persona + '</span>' +
-        '<span style="font-size:var(--fs-1);color:var(--fg-low);">' + RP_STAGES[k] + '</span></span></button>';
+        '<span class="avatar ' + rpTone(RP[k].persona) + '" style="width:22px;height:22px;font-size:10px;">' +
+        RP[k].ini + '</span><span class="li-stack"><span>' + RP[k].persona + '</span>' +
+        '<span class="li-sub">' + RP_STAGES[k] + '</span></span></button>';
     });
     m.innerHTML = html;
   }

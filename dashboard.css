@@ -1219,3 +1219,30 @@ details.collapse .collapse-body { padding: var(--space-3); font-size: var(--fs-2
   color: var(--fg-low); line-height: var(--lh-1); }
 .stage-card .sg-last { display: flex; align-items: center; gap: var(--space-2);
   margin-top: var(--space-3); font-size: var(--fs-1); color: var(--fg-low); }
+
+/* ---- .list-item on a button -----------------------------------------------
+   The base rule assumes a div or an anchor, so a <button class="list-item">
+   keeps the user agent's grey fill and border and the menu reads as broken.
+   A menu row is actionable, so it should be a button; reset the chrome here
+   rather than downgrading the markup. */
+button.list-item {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-base);
+  font-size: var(--fs-2);
+}
+button.list-item:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: -2px; }
+
+/* the selected row needs to read as selected without a check glyph */
+.list-item.is-selected { background: var(--accent-3); color: var(--accent-11); }
+.list-item.is-selected:hover { background: var(--accent-9); color: var(--accent-contrast); }
+
+/* a menu row carrying an avatar plus a stacked name and caption */
+.list-item .li-stack { display: flex; flex-direction: column; line-height: var(--lh-1); }
+.list-item .li-sub { font-size: var(--fs-1); color: var(--fg-low); }
+.list-item:hover .li-sub { color: var(--accent-contrast); opacity: .8; }
+.list-item.is-selected .li-sub { color: var(--accent-11); opacity: .8; }
