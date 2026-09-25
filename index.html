@@ -7701,13 +7701,20 @@ meeting page, so the next person to open it can see a follow-up already went out
 <div class="draft-row" style="border-bottom:0;padding-top:0;">
   <span class="dr-label">Practise as</span>
   <div>
-    <div class="row-gap" style="gap:var(--space-2);flex-wrap:wrap;">
-      <span class="dropdown"><span class="avatar c8" style="width:20px;height:20px;font-size:9px;">PD</span> <span id="rpSetupPersona">Phyllis Dalrymple</span>
-        <span class="dropdown-chevron"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></span></span>
+    <div class="row-gap" style="gap:var(--space-2);flex-wrap:wrap;align-items:center;">
+      <span style="position:relative;display:inline-block;">
+        <button class="dropdown" data-rp-personabtn aria-expanded="false" id="rpPersonaBtn">
+          <span id="rpSetupAvatar"><span class="avatar c8" style="width:20px;height:20px;font-size:9px;">PD</span></span>
+          <span id="rpSetupPersona">Phyllis Dalrymple</span>
+          <span class="dropdown-chevron"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></span>
+        </button>
+        <div class="dropdown-menu" id="rpPersonaMenu" hidden
+             style="position:absolute;left:0;top:calc(100% + 6px);z-index:40;min-width:290px;"></div>
+      </span>
       <span class="text-subtle" style="font-size:var(--fs-1);">or</span>
-      <button class="btn btn-surface is-sm" ><svg class="btn-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /> <circle cx="12" cy="7" r="4" /></svg> Use a generic persona</button>
+      <span id="rpGenericWrap"><button class="btn btn-surface is-sm" data-rp-generic><svg class="btn-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /> <circle cx="12" cy="7" r="4" /></svg> Use a generic persona</button></span>
     </div>
-    <div class="text-subtle" style="font-size:var(--fs-1);margin-top:var(--space-2);">
+    <div class="text-subtle" style="font-size:var(--fs-1);margin-top:var(--space-2);" id="rpPersonaNote">
       Seeding from a prospect opens at their current stage and uses what the CRM already knows about them.</div>
   </div>
 </div>
@@ -9455,6 +9462,54 @@ and it is moving away from you.</p>
   var LCLS = ['is-bad', 'is-notbad', 'is-good', 'is-better', 'is-excellent'];
   var rp = null;
   var rpHistory = {};   // stage -> [ratings]
+  var rpSel = 'posttour';       // stage chosen on the setup screen
+  var rpGeneric = false;        // practise without a CRM record behind it
+
+  function rpPersonaName(key) {
+    return rpGeneric ? 'A prospect at this stage' : RP[key].persona;
+  }
+  function rpPersonaIni(key) { return rpGeneric ? 'AP' : RP[key].ini; }
+  function rpFirstName(key) {
+    return rpGeneric ? 'Prospect' : RP[key].persona.split(' ')[0];
+  }
+  function rpSyncSetup() {
+    var lbl = document.getElementById('rpSetupStage');
+    if (lbl) { lbl.textContent = RP_STAGES[rpSel]; }
+    var per = document.getElementById('rpSetupPersona');
+    if (per) { per.textContent = rpPersonaName(rpSel); }
+    var avw = document.getElementById('rpSetupAvatar');
+    if (avw) {
+      avw.innerHTML = '<span class="avatar ' + (rpGeneric ? 'is-neutral' : rpTone(RP[rpSel].persona)) +
+        '" style="width:20px;height:20px;font-size:10px;">' + rpPersonaIni(rpSel) + '</span>';
+    }
+    var g = document.getElementById('rpGenericWrap');
+    if (g) {
+      g.innerHTML = '<button class="btn ' + (rpGeneric ? 'btn-soft' : 'btn-surface') +
+        ' is-sm" data-rp-generic>' + rpIcon(rpGeneric ? 'check' : 'minus') + ' ' +
+        (rpGeneric ? 'Using a generic persona' : 'Use a generic persona') + '</button>';
+    }
+    var note = document.getElementById('rpPersonaNote');
+    if (note) {
+      note.innerHTML = rpGeneric
+        ? 'No CRM record behind this one. The conversation is the same, but nothing is tailored to a real person, which is how it works for a workspace with no CRM connected.'
+        : 'Seeding from a prospect opens at their current stage and uses what the CRM already knows about them.';
+    }
+    var btn = document.getElementById('rpPersonaBtn');
+    if (btn) { btn.disabled = rpGeneric; btn.style.opacity = rpGeneric ? '.5' : ''; }
+  }
+  function rpBuildPersonaMenu() {
+    var m = document.getElementById('rpPersonaMenu');
+    if (!m) { return; }
+    var html = '<div class="list-item is-header">From your CRM, by stage</div>';
+    Object.keys(RP_STAGES).forEach(function (k) {
+      html += '<button class="list-item' + (k === rpSel ? ' is-selected' : '') + '" data-rp-person="' + k + '">' +
+        '<span class="avatar ' + rpTone(RP[k].persona) + '" style="width:20px;height:20px;font-size:10px;">' +
+        RP[k].ini + '</span><span style="display:flex;flex-direction:column;margin-left:8px;">' +
+        '<span>' + RP[k].persona + '</span>' +
+        '<span style="font-size:var(--fs-1);color:var(--fg-low);">' + RP_STAGES[k] + '</span></span></button>';
+    });
+    m.innerHTML = html;
+  }
 
   function rpStage() { return RP[rp.stage]; }
   function rpLevel() {
@@ -9486,15 +9541,16 @@ and it is moving away from you.</p>
     var st = rpStage();
     document.getElementById('rpStageBadge').textContent = RP_STAGES[rp.stage];
     document.getElementById('rpStageName').textContent = RP_STAGES[rp.stage];
-    document.getElementById('rpPersona').textContent = st.persona;
+    document.getElementById('rpPersona').textContent = rpPersonaName(rp.stage);
     document.getElementById('rpTimer').textContent =
       '0' + Math.floor(rp.step * 2 + 1) + ':' + (rp.step ? '4' + rp.step : '05');
 
     var t = '';
     rp.turns.forEach(function (tn) {
       if (tn.who === 'ai') {
-        t += '<div class="turn"><span class="avatar ' + rpTone(st.persona) + '">' + st.ini + '</span>' +
-          '<div><span class="tn-who">' + st.persona.split(' ')[0] + '</span>' +
+        t += '<div class="turn"><span class="avatar ' + (rpGeneric ? 'is-neutral' : rpTone(st.persona)) +
+          '">' + rpPersonaIni(rp.stage) + '</span>' +
+          '<div><span class="tn-who">' + rpFirstName(rp.stage) + '</span>' +
           '<div class="tn-body">' + tn.text + '</div></div></div>';
       } else {
         t += '<div class="turn is-me"><span class="avatar">YP</span>' +
@@ -9570,7 +9626,7 @@ and it is moving away from you.</p>
     document.getElementById('rpHeadline').textContent = heads[rating - 1];
     document.getElementById('rpMeta').innerHTML =
       '<span class="badge is-info">' + RP_STAGES[rp.stage] + '</span>' +
-      '<span class="badge is-neutral">' + st.persona + '</span>' +
+      '<span class="badge is-neutral">' + rpPersonaName(rp.stage) + '</span>' +
       '<span class="badge is-neutral">' + met + ' of ' + total + ' objectives</span>';
 
     document.getElementById('rpTrack').innerHTML =
@@ -9650,16 +9706,42 @@ and it is moving away from you.</p>
         c.classList.toggle('is-selected', on);
         c.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
-      var key = card.getAttribute('data-stage');
-      var lbl = document.getElementById('rpSetupStage');
-      if (lbl) { lbl.textContent = RP_STAGES[key]; }
-      var per = document.getElementById('rpSetupPersona');
-      if (per && RP[key]) { per.textContent = RP[key].persona; }
+      rpSel = card.getAttribute('data-stage');
+      rpSyncSetup();
+      rpBuildPersonaMenu();
       return;
     }
+    if (e.target.closest && e.target.closest('[data-rp-generic]')) {
+      rpGeneric = !rpGeneric;
+      var mm = document.getElementById('rpPersonaMenu');
+      if (mm) { mm.hidden = true; }
+      rpSyncSetup();
+      return;
+    }
+    var pb = e.target.closest && e.target.closest('[data-rp-personabtn]');
+    var menu = document.getElementById('rpPersonaMenu');
+    if (pb && menu && !rpGeneric) {
+      e.stopPropagation();
+      rpBuildPersonaMenu();
+      menu.hidden = !menu.hidden;
+      pb.setAttribute('aria-expanded', menu.hidden ? 'false' : 'true');
+      return;
+    }
+    var pick = e.target.closest && e.target.closest('[data-rp-person]');
+    if (pick) {
+      rpSel = pick.getAttribute('data-rp-person');
+      document.querySelectorAll('[data-stage]').forEach(function (c) {
+        var on = c.getAttribute('data-stage') === rpSel;
+        c.classList.toggle('is-selected', on);
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      if (menu) { menu.hidden = true; }
+      rpSyncSetup();
+      return;
+    }
+    if (menu && !menu.hidden) { menu.hidden = true; }
     if (e.target.closest && e.target.closest('[data-rp-start]')) {
-      var sel = document.querySelector('[data-stage].is-selected');
-      rpStart(sel ? sel.getAttribute('data-stage') : 'posttour');
+      rpStart(rpSel);
       return;
     }
     var ch = e.target.closest && e.target.closest('[data-rp-choose]');
@@ -9669,6 +9751,7 @@ and it is moving away from you.</p>
   });
 
   try { rpSeed(); } catch (err) {}
+  try { rpSyncSetup(); rpBuildPersonaMenu(); } catch (err) {}
 
   go(location.hash.replace('#', '') || 'view-index');
 })();
