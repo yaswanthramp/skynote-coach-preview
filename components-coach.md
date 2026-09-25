@@ -258,3 +258,10 @@ Every missed objective shows the line that would have earned it, taken from the 
 
 The result screen seeds a representative run on load, so it reads sensibly when opened cold from
 the screen index and is then overwritten by whatever the reviewer actually plays.
+
+### Where role play lives
+
+Role play is a tab inside My Coach, not its own destination. Practice and coaching answer the same
+question, how do I get better at this, so they sit behind one door: trends say what is wrong, drills
+say what to do about it, and role play is where you do it. The session and result are sub-screens
+that keep the shell and highlight My Coach in the sidebar, reached from the tab rather than the nav.

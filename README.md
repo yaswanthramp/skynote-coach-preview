@@ -25,10 +25,9 @@ both supported.
 
 | Nav | What is on it |
 |---|---|
-| Role play | Choose a stage, run a branching session with the five-level meter, read the result out of 5. Fully interactive. Guidelines live in Settings |
 | Lisa | The digital twin: the daily brief and her proposals, follow-ups both ways, Ask Lisa, and her activity log. Plus the draft-and-send dialog |
 | Conversations | The meeting list, plus three meeting sub screens: the Coach tab, the states before a number exists, and one metric drilled into its ten moments |
-| My Coach | Trends, one metric in depth, goals and streaks, and the drills that say how to improve each pillar |
+| My Coach | Trends, one metric in depth, goals and streaks with the improvement drills, and Role play: choose a stage, run a branching session with the five-level meter, read the result out of 5 |
 | My Discovery | Prospects from the CRM, the Discovery Coach prompt sheet for the next tour, the logged activity behind it, and counselor notes |
 | Clip library | Promoting a moment into shared teaching material |
 | Settings | Who can see what, ideal ranges, modules and rollout |
