@@ -7702,20 +7702,17 @@ meeting page, so the next person to open it can see a follow-up already went out
   <span class="dr-label">Practise as</span>
   <div>
     <div class="row-gap" style="gap:var(--space-2);flex-wrap:wrap;align-items:center;">
-      <span style="position:relative;display:inline-block;">
-        <button class="dropdown" data-rp-personabtn aria-expanded="false" id="rpPersonaBtn">
-          <span id="rpSetupAvatar"><span class="avatar c8" style="width:20px;height:20px;font-size:9px;">PD</span></span>
-          <span id="rpSetupPersona">Phyllis Dalrymple</span>
-          <span class="dropdown-chevron"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></span>
-        </button>
-        <div class="dropdown-menu" id="rpPersonaMenu" hidden
-             style="position:absolute;left:0;top:calc(100% + 6px);z-index:40;min-width:290px;"></div>
+      <span class="row-gap" style="gap:var(--space-2);" id="rpPersonaShow">
+        <span id="rpSetupAvatar"><span class="avatar c8" style="width:20px;height:20px;font-size:9px;">PD</span></span>
+        <span style="font-size:var(--fs-2);font-weight:var(--weight-medium);" class="text-high"
+              id="rpSetupPersona">Phyllis Dalrymple</span>
       </span>
       <span class="text-subtle" style="font-size:var(--fs-1);">or</span>
       <span id="rpGenericWrap"><button class="btn btn-surface is-sm" data-rp-generic><svg class="btn-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /> <circle cx="12" cy="7" r="4" /></svg> Use a generic persona</button></span>
     </div>
     <div class="text-subtle" style="font-size:var(--fs-1);margin-top:var(--space-2);" id="rpPersonaNote">
-      Seeding from a prospect opens at their current stage and uses what the CRM already knows about them.</div>
+      Each stage has one prospect behind it, from your CRM. To start from a person instead, use
+      <b>Prep this tour</b> on My Discovery.</div>
   </div>
 </div>
 <div class="row-gap" style="margin-top:var(--space-4);gap:var(--space-3);align-items:center;">
@@ -9492,24 +9489,11 @@ and it is moving away from you.</p>
     if (note) {
       note.innerHTML = rpGeneric
         ? 'No CRM record behind this one. The conversation is the same, but nothing is tailored to a real person, which is how it works for a workspace with no CRM connected.'
-        : 'Seeding from a prospect opens at their current stage and uses what the CRM already knows about them.';
+        : 'Each stage has one prospect behind it, from your CRM. To start from a person instead, use <b>Prep this tour</b> on My Discovery.';
     }
-    var btn = document.getElementById('rpPersonaBtn');
-    if (btn) { btn.disabled = rpGeneric; btn.style.opacity = rpGeneric ? '.5' : ''; }
+    var show = document.getElementById('rpPersonaShow');
+    if (show) { show.style.opacity = rpGeneric ? '.45' : ''; }
   }
-  function rpBuildPersonaMenu() {
-    var m = document.getElementById('rpPersonaMenu');
-    if (!m) { return; }
-    var html = '<div class="list-item is-header">From your CRM, by stage</div>';
-    Object.keys(RP_STAGES).forEach(function (k) {
-      html += '<button class="list-item' + (k === rpSel ? ' is-selected' : '') + '" data-rp-person="' + k + '">' +
-        '<span class="avatar ' + rpTone(RP[k].persona) + '" style="width:22px;height:22px;font-size:10px;">' +
-        RP[k].ini + '</span><span class="li-stack"><span>' + RP[k].persona + '</span>' +
-        '<span class="li-sub">' + RP_STAGES[k] + '</span></span></button>';
-    });
-    m.innerHTML = html;
-  }
-
   function rpStage() { return RP[rp.stage]; }
   function rpLevel() {
     var n = 3 + Math.round(rp.score / 2);
@@ -9707,38 +9691,13 @@ and it is moving away from you.</p>
       });
       rpSel = card.getAttribute('data-stage');
       rpSyncSetup();
-      rpBuildPersonaMenu();
       return;
     }
     if (e.target.closest && e.target.closest('[data-rp-generic]')) {
       rpGeneric = !rpGeneric;
-      var mm = document.getElementById('rpPersonaMenu');
-      if (mm) { mm.hidden = true; }
       rpSyncSetup();
       return;
     }
-    var pb = e.target.closest && e.target.closest('[data-rp-personabtn]');
-    var menu = document.getElementById('rpPersonaMenu');
-    if (pb && menu && !rpGeneric) {
-      e.stopPropagation();
-      rpBuildPersonaMenu();
-      menu.hidden = !menu.hidden;
-      pb.setAttribute('aria-expanded', menu.hidden ? 'false' : 'true');
-      return;
-    }
-    var pick = e.target.closest && e.target.closest('[data-rp-person]');
-    if (pick) {
-      rpSel = pick.getAttribute('data-rp-person');
-      document.querySelectorAll('[data-stage]').forEach(function (c) {
-        var on = c.getAttribute('data-stage') === rpSel;
-        c.classList.toggle('is-selected', on);
-        c.setAttribute('aria-pressed', on ? 'true' : 'false');
-      });
-      if (menu) { menu.hidden = true; }
-      rpSyncSetup();
-      return;
-    }
-    if (menu && !menu.hidden) { menu.hidden = true; }
     if (e.target.closest && e.target.closest('[data-rp-start]')) {
       rpStart(rpSel);
       return;
@@ -9750,7 +9709,7 @@ and it is moving away from you.</p>
   });
 
   try { rpSeed(); } catch (err) {}
-  try { rpSyncSetup(); rpBuildPersonaMenu(); } catch (err) {}
+  try { rpSyncSetup(); } catch (err) {}
 
   go(location.hash.replace('#', '') || 'view-index');
 })();
